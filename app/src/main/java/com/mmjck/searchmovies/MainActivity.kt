@@ -1,16 +1,18 @@
 package com.mmjck.searchmovies
 
 import android.content.Context
-import android.hardware.input.InputManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mmjck.searchmovies.adapter.MoviesAdapter
 import com.mmjck.searchmovies.model.Movie
 import com.mmjck.searchmovies.model.MoviesResponse
 
@@ -29,10 +31,8 @@ class MainActivity : ComponentActivity() {
 
         setContentView(R.layout.activity_main)
 
-
         btnSearch = findViewById(R.id.btn_search)
         editTextSearch = findViewById(R.id.search_movie)
-
 
         bindings()
     }
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    fun getData(text: String) {
+    private fun getData(text: String) {
         val callback = RetrofitClient.moviesApi.getMovies(text)
 
         callback.enqueue (object : Callback<MoviesResponse>  {
@@ -55,7 +55,6 @@ class MainActivity : ComponentActivity() {
             ) {
 
                 val l = response.body()?.search
-
                 if(l != null){
                     addData(l)
                 }
@@ -76,7 +75,12 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    fun addData(list: List<Movie>) {
-        var recyclerView = findViewById<RecyclerView>(R.id.list_movies)    }
+    fun addData(l: List<Movie>) {
+        val recyclerView = findViewById<RecyclerView>(R.id.list_movies)
+        val adapter = MoviesAdapter(l)
+
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+    }
 
 }
