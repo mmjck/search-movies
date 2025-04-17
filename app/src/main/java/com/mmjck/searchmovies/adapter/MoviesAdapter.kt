@@ -2,6 +2,7 @@ package com.mmjck.searchmovies.adapter
 
 import android.content.Context
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -41,7 +42,11 @@ class MoviesAdapter(private val list: List<Movie>): RecyclerView.Adapter<MoviesA
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        context = parent.context
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_item_movies, parent, false)
+
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
