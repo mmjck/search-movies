@@ -5,17 +5,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
     companion object {
-        fun getInstance(path: String): Retrofit {
-            return Retrofit.Builder()
-                .baseUrl(path)
+        const val BASE_URL = "https://www.omdbapi.com/"
+
+        private fun getInstance(): Retrofit {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
-
+            return retrofit
         }
 
         val moviesApi: MoviesApi by lazy {
-            RetrofitClient.getInstance("http://www.omdbapi.com/")
+            RetrofitClient.getInstance()
                 .create(MoviesApi::class.java)
         }
     }

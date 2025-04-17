@@ -1,7 +1,6 @@
 package com.mmjck.searchmovies.model
 
 import com.google.gson.annotations.SerializedName
-import com.mmjck.searchmovies.retrofit.MoviesApi
 
 data class MoviesResponse (
     @SerializedName("Search")
